@@ -1,0 +1,521 @@
+<!doctype html>
+<html>
+
+<head>
+    <style type="text/css">
+        .body {
+            /* left: 0px; */
+            position: absolute;
+            background: #293250;
+            color: #FFD55A;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 100%;
+            height: 100%;
+            font: 12px "Open Sans", sans-serif;
+        }
+
+        .form__group {
+            position: relative;
+            padding: 15px 0 0;
+            margin-top: 10px;
+            width: 50%;
+        }
+
+        .form__field {
+            font-family: inherit;
+            width: 100%;
+            border: 0;
+            border-bottom: 2px solid #FFD55A;
+            outline: 0;
+            font-size: 1.3rem;
+            color: #6DD47E;
+            padding: 7px 0;
+            background: transparent;
+            transition: border-color 0.2s;
+        }
+
+        .form__field::placeholder {
+            color: transparent;
+        }
+
+        .form__field:placeholder-shown~.form__label {
+            font-size: 1.3rem;
+            cursor: text;
+            top: 20px;
+        }
+
+        .form__label {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: #FFD55A;
+        }
+
+        .form__field:focus {
+            padding-bottom: 6px;
+            font-weight: 700;
+            border-width: 3px;
+            border-image: linear-gradient(to right, #6DD47E, #FFD55A);
+            border-image-slice: 1;
+        }
+
+        .form__field:focus~.form__label {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: #6DD47E;
+            font-weight: 700;
+        }
+
+        /* reset input */
+        .form__field:required,
+        .form__field:invalid {
+            box-shadow: none;
+        }
+
+        /* demo */
+        /* body {
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-size: 1.5rem;
+            background-color: #293250;
+        } */
+
+        .button {
+            background-color: #293250;
+            border: 2px solid #FFD55A;
+            /* border-width: 10px; */
+            border-radius: 30px;
+            color: #6DD47E;
+            padding: 15px 32px;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 24px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        div.screen {
+            z-index: 1;
+            width: 320px;
+            height: 560px;
+            overflow: hidden;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            margin-left: -160px;
+            background: #6DD47E;
+        }
+
+        .list {
+            /* z-index: 6; */
+            margin-top: 36px;
+            text-align: left;
+        }
+
+        .item {
+            /* z-index: 6; */
+            height: 115px;
+            margin-top: 30px 0;
+            padding-left: 115px;
+            clear: both;
+        }
+
+        .item .img,
+        .item span {
+            background: #293250;
+            border-radius: 3px;
+        }
+
+        .item .img {
+            float: left;
+            width: 71px;
+            height: 71px;
+            margin-left: -93px;
+        }
+
+        .item span {
+            height: 11px;
+            width: 180px;
+            margin-bottom: 19px;
+            float: left;
+        }
+
+        .item span:nth-of-type(3) {
+            width: 75px;
+            margin-botom: 0;
+        }
+
+        div.burger {
+            z-index: 1;
+            height: 30px;
+            width: 40px;
+            position: absolute;
+            top: 11px;
+            left: 21px;
+            cursor: pointer;
+        }
+
+        div.x,
+        div.y,
+        div.z {
+            z-index: 1;
+            position: absolute;
+            margin: auto;
+            top: 0px;
+            bottom: 0px;
+            background: #FFD55A;
+            border-radius: 2px;
+            -webkit-transition: all 200ms ease-out;
+            -moz-transition: all 200ms ease-out;
+            -ms-transition: all 200ms ease-out;
+            -o-transition: all 200ms ease-out;
+            transition: all 200ms ease-out;
+        }
+
+        div.x,
+        div.y,
+        div.z {
+            height: 3px;
+            width: 26px;
+        }
+
+        div.y {
+            top: 18px;
+        }
+
+        div.z {
+            top: 37px;
+        }
+
+        div.collapse {
+            z-index: 1;
+            top: 20px;
+            background: #293250;
+            -webkit-transition: all 70ms ease-out;
+            -moz-transition: all 70ms ease-out;
+            -ms-transition: all 70ms ease-out;
+            -o-transition: all 70ms ease-out;
+            transition: all 70ms ease-out;
+        }
+
+        div.rotate30 {
+            z-index: 1;
+            -ms-transform: rotate(30deg);
+            -webkit-transform: rotate(30deg);
+            transform: rotate(30deg);
+            -webkit-transition: all 50ms ease-out;
+            -moz-transition: all 50ms ease-out;
+            -ms-transition: all 50ms ease-out;
+            -o-transition: all 50ms ease-out;
+            transition: all 50ms ease-out;
+        }
+
+        div.rotate150 {
+            z-index: 1;
+            -ms-transform: rotate(150deg);
+            -webkit-transform: rotate(150deg);
+            transform: rotate(150deg);
+            -webkit-transition: all 50ms ease-out;
+            -moz-transition: all 50ms ease-out;
+            -ms-transition: all 50ms ease-out;
+            -o-transition: all 50ms ease-out;
+            transition: all 50ms ease-out;
+        }
+
+        div.rotate45 {
+            z-index: 1;
+            -ms-transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            -webkit-transition: all 100ms ease-out;
+            -moz-transition: all 100ms ease-out;
+            -ms-transition: all 100ms ease-out;
+            -o-transition: all 100ms ease-out;
+            transition: all 100ms ease-out;
+        }
+
+        div.rotate135 {
+            z-index: 1;
+            -ms-transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+            -webkit-transition: all 100ms ease-out;
+            -moz-transition: all 100ms ease-out;
+            -ms-transition: all 100ms ease-out;
+            -o-transition: all 100ms ease-out;
+            transition: all 100ms ease-out;
+        }
+
+        div.navbar {
+            z-index: 1;
+            height: 73px;
+            background: #293250;
+            /* opacity: 1; */
+        }
+
+        div.circle {
+            z-index: 1;
+            border-radius: 50%;
+            width: 0px;
+            height: 0px;
+            position: absolute;
+            top: 35px;
+            left: 36px;
+            background: #6DD47E;
+            opacity: 1;
+            -webkit-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -moz-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -ms-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -o-transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            transition: all 300ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+        }
+
+        div.circle.expand {
+            z-index: 1;
+            width: 1400px;
+            height: 1400px;
+            top: -560px;
+            left: -565px;
+            -webkit-transition: all 400ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -moz-transition: all 400ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -ms-transition: all 400ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -o-transition: all 400ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            transition: all 400ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+
+        }
+
+        div.menu {
+            z-index: 1;
+            height: auto;
+            width: auto;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+
+        div.menu ul li {
+            z-index: 1;
+            list-style: none;
+            position: absolute;
+            padding: 20px;
+            /* top: 0px;
+            left: 0px; */
+            opacity: 0;
+            width: 320px;
+            align-content: center;
+            text-align: center;
+            font-weight: bolder;
+            font-size: 35px;
+            -webkit-transition: all 70ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -moz-transition: all 70ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -ms-transition: all 70ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -o-transition: all 70ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            transition: all 70ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+        }
+
+        div.menu ul li a {
+            z-index: 1;
+            color: #293250;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 3px;
+        }
+
+        div.menu li.animate {
+            z-index: 1;
+            font-size: 35px;
+            opacity: 1;
+            -webkit-transition: all 150ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -moz-transition: all 150ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -ms-transition: all 150ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            -o-transition: all 150ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+            transition: all 150ms cubic-bezier(0.000, 0.995, 0.990, 1.000);
+        }
+
+        div.menu li.animate:nth-of-type(1) {
+            z-index: 1;
+            top: 120px;
+            transition-delay: 0.0s;
+        }
+
+        div.menu li.animate:nth-of-type(2) {
+            z-index: 1;
+            top: 190px;
+            transition-delay: 0.03s;
+
+        }
+
+        div.menu li.animate:nth-of-type(3) {
+            z-index: 1;
+            top: 260px;
+            transition-delay: 0.06s;
+
+        }
+
+        div.menu li.animate:nth-of-type(4) {
+            z-index: 1;
+            top: 330px;
+            transition-delay: 0.09s;
+
+        }
+
+        div.menu li.animate:nth-of-type(5) {
+            z-index: 1;
+            top: 400px;
+            transition-delay: 0.12s;
+
+        }
+
+        div.menu li.animate:nth-of-type(6) {
+            z-index: 1;
+            top: 470px;
+            transition-delay: 0.15s;
+
+        }
+    </style>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>
+        {% block title %} Covid App {% endblock %}
+    </title>
+    {% block script %} {% endblock %}
+</head>
+
+<body class="body">
+    <!-- <div class="sidenav" class="navbar navbar-expand-lg navbar-light bg-light ">
+        <a href="/home">Home</a>
+        <a href="/dailytracker">Tracker</a>
+        <a href="/health">Health History</a>
+        <a href="/emergencycontacts">Emergency Contacts</a>
+        <a href="/sos">SOS</a>
+        <a href="/location">Location</a>
+        <a href="/logout">Logout</a>
+    </div> -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <div id="content" , name="content">
+        <div class="row justify-content-center">
+            <div class="col-9">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <div class="circle"></div>
+    <div class="menu">
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/dailytracker">Tracker</a></li>
+            <li><a href="/health">History</a></li>
+            <li><a href="/emergencycontacts">Contacts</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+    <div class="burger">
+        <div class="x"></div>
+        <div class="y"></div>
+        <div class="z"></div>
+    </div>
+
+    </div>
+
+    <script>
+        if ('ontouchstart' in window) {
+            var click = 'touchstart';
+        } else {
+            var click = 'click';
+        }
+
+
+        $('div.burger').on(click, function () {
+
+            if (!$(this).hasClass('open')) {
+                openMenu();
+            } else {
+                closeMenu();
+            }
+
+        });
+
+
+        $('div.menu ul li a').on(click, function (e) {
+            e.preventDefault();
+            closeMenu();
+        });
+
+
+        function openMenu() {
+
+            $('div.circle').addClass('expand');
+
+            $('div.burger').addClass('open');
+            $('div.x, div.y, div.z').addClass('collapse');
+            $('.menu li').addClass('animate');
+
+            setTimeout(function () {
+                $('div.y').hide();
+                $('div.x').addClass('rotate30');
+                $('div.z').addClass('rotate150');
+            }, 70);
+            setTimeout(function () {
+                $('div.x').addClass('rotate45');
+                $('div.z').addClass('rotate135');
+            }, 120);
+            setTimeout(function () {
+                $('div.x').show();
+                $('div.z').show();
+            }, 1);
+        }
+
+        function closeMenu() {
+
+            $('div.burger').removeClass('open');
+            $('div.x').removeClass('rotate45').addClass('rotate30');
+            $('div.z').removeClass('rotate135').addClass('rotate150');
+            $('div.circle').removeClass('expand');
+            $('.menu li').removeClass('animate');
+
+            setTimeout(function () {
+                $('div.x').removeClass('rotate30');
+                $('div.z').removeClass('rotate150');
+            }, 50);
+            setTimeout(function () {
+                $('div.y').show();
+                $('div.x, div.y, div.z').removeClass('collapse');
+            }, 70);
+
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

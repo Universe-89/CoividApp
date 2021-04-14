@@ -1,0 +1,169 @@
+{% extends "dailytracker/base.html" %}
+{% block title %} Your Emergency Contacts {% endblock%}
+{% block script %}
+<style>
+  p {
+    margin-right: 10px;
+  }
+  .side{
+    font-size: 12px;
+
+  }
+</style>
+{% endblock%}
+{% block content %}
+<h1 class="mt-2">&nbsp;&nbsp;Contacts</h1>
+<hr class="mt-0 mb-4" />
+<div class="container pt-4">
+  <style>
+    .blue {
+      background-color: #293250;
+      border-color : #FFD55A;
+      overflow: hidden;
+    }
+
+    h5 {
+      color: #6DD47E;
+    }
+
+    h6 {
+      color: #6DD47E;
+    }
+
+    input[type=text] , input[type=tel] {
+      color: #6DD47E;
+      background-color : #293250;
+    }
+  </style>
+  {% if contactlist|length == 2 %}
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card blue">
+        <div class="card-body">
+          <h5 class="card-title">{{ c1.name }}</h5>
+          <div class="form-popup" id="myForm">
+            <form action="#" class="form-container" method="POST">
+              {% csrf_token %}
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <p class="card-text"><b>Email : </b></p>
+                </div>
+                <input type="text" class="border-0" value="{{ c1.contact }}" size="20" name="email">
+              </div>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <p class="card-text"><b>Phone : </b></p>
+                </div>
+                <input type="tel" class="border-0" value="{{ c1.phone }}" size="15" name="phone">
+              </div>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <p class="card-text"><b>Name : </b></p>
+                </div>
+                <input type="text" class="border-0" value="{{ c1.name }}" size="20" name="name">
+              </div>
+
+              <button type="submit" class="button side" name="update1" id="update1"
+                value="{{ c1.contact }}">Update</button>
+              <button type="submit" class="button side" name="delete1" id="delete1"
+                value="{{ c1.contact }}">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card blue">
+        <div class="card-body">
+          <h5 class="card-title">{{ c2.name }}</h5>
+          <div class="form-popup" id="myForm">
+            <form action="#" class="form-container" method="POST">
+              {% csrf_token %}
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <p class="card-text"><b>Email : </b></p>
+                </div>
+                <input type="text" class="border-0" value="{{ c2.contact }}" size= "20" name="email">
+              </div>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <p class="card-text"><b>Phone : </b></p>
+                </div>
+                <input type="tel" class="border-0" value="{{ c2.phone }}" size="15" name="phone">
+              </div>
+              <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <p class="card-text"><b>Name : </b></p>
+                </div>
+                <input type="text" class="border-0" value="{{ c2.name }}" size="20" name="name">
+              </div>
+
+              <button type="submit" class="button side" name="update2" id="update2"
+                value="{{ c2.contact }}">Update</button>
+              <button type="submit" class="button side" name="delete2" id="delete2"
+                value="{{ c2.contact }}">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% elif contactlist|length == 1 %}
+  <div class="col-sm-6">
+    <div class="card blue">
+      <div class="card-body">
+        <h5 class="card-title">{{ c1.name }}</h5>
+        <div class="form-popup" id="myForm">
+          <form action="#" class="form-container" method="POST">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <p class="card-text"><b>Email : </b></p>
+              </div>
+              <input type="text" class="border-0" value="{{ c1.contact }}" size="30" name="email">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <p class="card-text"><b>Phone : </b></p>
+              </div>
+              <input type="tel" class="border-0" value="{{ c1.phone }}" size="15" name="phone">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <p class="card-text"><b>Name : </b></p>
+              </div>
+              <input type="text" class="border-0" value="{{ c1.name }}" size="30" name="name">
+            </div>
+
+            <button type="submit" class="button side" name="update1" id="update1"
+              value="{{ c1.contact }}">Update</button>
+            <button type="submit" class="button side" name="delete1" id="delete1"
+              value="{{ c1.contact }}">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="card blue">
+      <div class="card-body">
+        <h5 class="card-title">Emergency Contact 2</h5>
+        <a href="/addition" class="button side">Add</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="col-sm-6">
+  <div class="card blue">
+    <div class="card-body">
+      <h5 class="card-title">Emergency Contact 1</h5>
+      <a href="/addition" class="button side">Add</a>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

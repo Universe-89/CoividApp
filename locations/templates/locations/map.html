@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <title>Directions Service </title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrK-MmntrS_XuIPtjAXNwKchjdaceVkYw&callback=initMap&libraries=&v=weekly"
+    defer></script>
+  <style type="text/css">
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+    #map {
+      height: 100%;
+    }
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script>
+    "use strict";
+
+    function initMap() {
+      const directionsService = new google.maps.DirectionsService();
+
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 13,
+        center: {
+          lat: parseFloat("{{ latiOrigin }}"),
+          lng: parseFloat("{{ lngiOrigin }}"),
+        }
+      }); // Create a renderer for directions and bind it to the map.
+
+      const directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: true
+
+      }); // Instantiate an info window to hold step text.
+
+      const stepDisplay = new google.maps
+        .InfoWindow(); // Display the route between the initial start and end selections.
+
+      calculateAndDisplayRoute(
+        directionsRenderer,
+        directionsService,
+        stepDisplay,
+        map
+      ); // Listen to change events from the start and end lists.
+
+      const onChangeHandler = function () {
+        calculateAndDisplayRoute(
+          directionsRenderer,
+          directionsService,
+          stepDisplay,
+          map
+        );
+      };
+
+
+      var markerAmbulance = new google.maps.Marker({
+        position: {
+          lat: parseFloat("{{ latDriver }}"),
+          lng: parseFloat("{{ lngDriver }}")
+        },
+        map: map,
+        icon: 'https://img.icons8.com/officel/30/000000/ambulance.png',
+        draggarble: false
+      });
+      var markerPatient = new google.maps.Marker({
+        position: {
+          lat: parseFloat("{{ latiOrigin }}"),
+          lng: parseFloat("{{ lngiOrigin }}")
+        },
+        map: map,
+        icon: 'https://img.icons8.com/dusk/30/000000/fever.png',
+        draggarble: false
+      });
+      var markerHospital = new google.maps.Marker({
+        position: {
+          lat: parseFloat("{{ latiDesti }}"),
+          lng: parseFloat("{{ lngiDesti }}")
+        },
+        map: map,
+        icon: 'https://img.icons8.com/dusk/30/000000/hospital-2.png',
+        draggarble: false
+      });
+
+      var informationDriver = new google.maps.InfoWindow({
+        content: '<h4>Driver Info <br> Name :- {{ driverName }} <br> Ambulance No :- {{ driverAmbulance }}</h4>'
+      });
+      var informationPatient = new google.maps.InfoWindow({
+        content: '<h4>Be Patient Help on the way</h4>'
+      });
+      var informationHospital = new google.maps.InfoWindow({
+        content: '<h4>Hospital Info <br> Name :- {{ hospitalName }} <br> Address :- {{ hospitalAdd }}'
+      });
+
+      markerAmbulance.addListener('click', function () {
+        informationDriver.open(map, markerAmbulance);
+      });
+      markerPatient.addListener('click', function () {
+        informationPatient.open(map, markerPatient);
+      });
+      markerHospital.addListener('click', function () {
+        informationHospital.open(map, markerHospital);
+      });
+    }
+
+    function calculateAndDisplayRoute(
+      directionsRenderer,
+      directionsService,
+      stepDisplay,
+      map
+    ) {
+
+      directionsService.route({
+          origin: {
+            lat: parseFloat("{{ latDriver }}"),
+            lng: parseFloat("{{ lngDriver }}"),
+          },
+          destination: {
+            lat: parseFloat("{{ latiDesti }}"),
+            lng: parseFloat("{{ lngiDesti }}"),
+
+          },
+          waypoints: [{
+            location: new google.maps.LatLng(parseFloat("{{ latiOrigin }}"), parseFloat("{{ lngiOrigin }}")),
+            stopover: true
+          }],
+          travelMode: google.maps.TravelMode.DRIVING
+        },
+        (result, status) => {
+          // Route the directions and pass the response to a function to create
+          // markers for each step.
+          if (status === "OK") {
+            document.getElementById("warnings-panel").innerHTML =
+              "<b>" + result.routes[0].warnings + "</b>";
+            directionsRenderer.setDirections(result);
+          } else {
+            window.alert("Directions request failed due to " + status);
+          }
+        }
+      );
+    }
+  </script>
+  <script>
+    const roomName = "2";
+    const chatSocket = new WebSocket(
+      'ws://' +
+      '127.0.0.1:8000' +
+      '/ws/ambulance/' +
+      roomName +
+      '/'
+    );
+
+    console.log(chatSocket);
+
+    chatSocket.onopen = () => chatSocket.send(JSON.stringify({
+      'message': 'hello',
+      'latiOrigin' : "{{ latiOrigin }}",
+      'lngiOrigin' : "{{ lngiOrigin }}",
+      'latDriver': "{{ latDriver }}",
+      'lngDriver': "{{ lngDriver }}",
+      'latiDesti' : "{{ latiDesti }}",
+      'lngiDesti' : "{{ lngiDesti }}",
+      'driverName' : "{{ driverName }}",
+      'driverAmbulance' : "{{ driverAmbulance }}",
+      'hospitalName' : "{{ hospitalName }}",
+      'hospitalAdd' : "{{ hospitalAdd }}"    
+    }));
+  </script>
+  </head>
+
+  <body>
+    <div id="map"></div>
+    &nbsp;
+    <div id="warnings-panel"></div>
+  </body>
+
+</html>

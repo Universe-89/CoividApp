@@ -1,0 +1,79 @@
+{% extends 'dailytracker/base.html' %}
+{% block title %} Home Page {% endblock%}
+{% block script %}
+<script>
+  function checkLocation() {
+    //geolocation API options
+    var options = {
+      maximumAge:0,
+      enableHighAccuracy: true,
+      timeout: 2000
+    };
+    //success getting the geolocation
+    function success(ppos) {
+      lat = ppos.coords.latitude;
+      lng = ppos.coords.longitude;
+      document.getElementById("lat").value = lat;
+      document.getElementById("lon").value = lng;
+      // codeLatLng(lat, lng);
+    }
+    //error when getting the geolocation 
+    function error(err) {
+      var errorMessage = "Error:";
+      switch (err.code) {
+        case err.TIMEOUT:
+          errorMessage = 'Error: Attempts to retrieve location timed out.';
+          break;
+        case err.POSITION_UNAVAILABLE:
+          errorMessage = "Error: Your browser doesn't know where you are.";
+          break;
+        case err.PERMISSION_DENIED:
+          errorMessage = 'Error: You have to give us permission!';
+          break;
+        case err.UNKNOWN_ERROR:
+          errorMessage = 'Error: Unknown error returned.';
+          break;
+        default:
+          errorMessage = 'Error: ' + err + ' ' + err.code;
+      }
+    }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    }
+  }
+
+  // function codeLatLng(lat, lng) {
+  //     var lat = parseFloat(lat);
+  //     var lng = parseFloat(lng);
+  //     var latlng = new google.maps.LatLng(lat, lng);
+  //     geocoder.geocode({'latLng': latlng}, function(results, status) {
+  //         if (status == google.maps.GeocoderStatus.OK) {
+  //             if (results[1]) {
+  //                 return results[1].formatted_address;
+  //             } else {
+  //                 alert('No results found');
+  //             }
+  //         } else {
+  //             alert('Geocoder failed due to: ' + status);
+  //         }
+  //     });
+  // }
+  
+  checkLocation();
+  (function () {
+    document.getElementById("save").click(); 
+  })();
+  
+</script>
+{% endblock%}
+{% block content %}
+<h1 class="mt-2">Help</h1>
+<hr class="mt-0 mb-4" />
+<form name="form" method="POST" action="#">
+  {% csrf_token %}
+  <input type = "text" id="lon" name ="lon" value="" hidden>
+  <input type = "text" id="lat" name = "lat" value="" hidden>
+  <button type="submit" name="save" id="save" value="save" class="btn btn-success">Call Ambulance</button>
+</form>
+
+{% endblock %}

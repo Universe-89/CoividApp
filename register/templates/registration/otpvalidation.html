@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<title>
+    OTP Validation
+</title>
+
+<body>
+    <h1 class="mt-2 text-center">OTP Validation</h1>
+    <hr class="mt-0 mb-4">
+    <div id="content" , name="content" class="main">
+        <div class="row justify-content-center">
+            <div class="container pt-3">
+                <form name="form" method="POST">
+                    {% csrf_token %}
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Enter OTP</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Enter opt received on your mail"
+                                    name="otp" id="otp" aria-label="Username" aria-describedby="basic-addon1">
+                                <button type="submit" name="resend" id="resend" value="resend"
+                                    class="btn btn-secondary">
+                                    Resend
+                                </button>
+                                <button type="submit" name="save" id="save" value="save" class="btn btn-success">
+                                    Submit
+                                </button>
+                            </div>
+                            <p id="countdown"></p>
+                            <button type="submit" name="cancel" id="cancel" value="cancel" class="btn btn-danger">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        alert('{{ message }}');
+
+        var timeleft = 300;
+        var downloadTimer = setInterval(function () {
+            if (timeleft <= 0) {
+                clearInterval(downloadTimer);
+                document.getElementById("countdown").style.color = '#d00'
+                document.getElementById("countdown").innerHTML = "Resend OTP  or Cancel";
+
+            } else {
+                minutes = parseInt(timeleft / 60, 10);
+                seconds = parseInt(timeleft % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                document.getElementById("countdown").innerHTML = minutes + ":" + seconds +
+                    " minutes remaining before OTP expires";
+            }
+            timeleft -= 1;
+        }, 1000);
+    </script>
+</body>
+
+</html>

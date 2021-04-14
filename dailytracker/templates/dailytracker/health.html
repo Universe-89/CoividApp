@@ -1,0 +1,301 @@
+{% extends "dailytracker/base.html" %}
+{% block title %} History {%endblock%}
+
+{% block content %}
+<style>
+    .form__group {
+        position: relative;
+        padding: 15px 0 0;
+        margin-bottom: 20px;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .form__field {
+        font-family: inherit;
+        width: 100%;
+        border: 0;
+        border-bottom: 2px solid #FFD55A;
+        outline: 0;
+        font-size: 1.3rem;
+        color: #6DD47E;
+        padding: 7px 0;
+        background: transparent;
+        transition: border-color 0.2s;
+    }
+
+    .form__field::placeholder {
+        color: transparent;
+        font-size: 1rem;
+    }
+
+    .form__field:placeholder-shown~.form__label {
+        font-size: 1rem;
+        cursor: text;
+        top: 20px;
+    }
+
+    .form__label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 1rem;
+        color: #FFD55A;
+    }
+
+    .form__field:focus {
+        padding-bottom: 6px;
+        font-weight: 700;
+        border-width: 3px;
+        border-image: linear-gradient(to right, #6DD47E, #6DD47E);
+        border-image-slice: 1;
+    }
+
+    .form__field:focus~.form__label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 1rem;
+        color: #6DD47E;
+        font-weight: 700;
+    }
+
+    /* reset input */
+    .form__field:required,
+    .form__field:invalid {
+        box-shadow: none;
+    }
+
+    /* demo */
+    /* body {
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-size: 1.5rem;
+        background-color: #293250;
+    } */
+
+    .btn {
+        /* border: 1px solid #FFD55A; */
+        display: inline-block;
+        padding: 10px;
+        color: #ffd55a;
+        font-weight: bold;
+        position: relative;
+        text-align: center;
+        transition: background 600ms ease, color 600ms ease;
+    }
+
+    input[type=radio].toggle {
+        display: none;
+    }
+
+    input[type=radio].toggle+label {
+        cursor: pointer;
+        min-width: 60px;
+    }
+
+    input[type=radio].toggle+label:hover {
+        background: none;
+        color: #ffd55a;
+    }
+
+    input[type=radio].toggle+label:after {
+        background: #6dd47e;
+        content: "";
+        height: 100%;
+        position: absolute;
+        top: 0;
+        transition: left 200ms cubic-bezier(0.77, 0, 0.175, 1);
+        width: 100%;
+        z-index: -1;
+    }
+
+    input[type=radio].toggle.toggle-left+label {
+        border-right: 0px;
+    }
+
+    input[type=radio].toggle.toggle-left+label:after {
+        left: 110%;
+    }
+
+    input[type=radio].toggle.toggle-right+label {
+        margin-left: 0px;
+    }
+
+    input[type=radio].toggle.toggle-right+label:after {
+        left: -100%;
+    }
+
+    input[type=radio].toggle:checked+label {
+        cursor: default;
+        color: #293250;
+        transition: color 200ms;
+    }
+
+    input[type=radio].toggle:checked+label:after {
+        left: 0px;
+    }
+    .cent{
+        align-items : center;
+        margin-left : 6em;
+    }
+</style>
+<h1 class="mt-2">&nbsp;&nbsp; History</h1>
+<hr class="mt-0 mb-4" />
+<form name="form" method="POST" action="#">
+    {% csrf_token %}
+
+    <fieldset class="form-group cent cent">
+        <div class="row">
+            <legend class="col-form-label col-sm-3 pt-0">Diabetic Patient</legend>
+            <div class="col-sm-13">
+                <input id="diabetic-yes" class="toggle toggle-left" name="diabetic-radio" value="yes" type="radio">
+                <label for="diabetic-yes" class="btn">Yes</label>
+                <input id="diabetic-no" class="toggle toggle-right" name="diabetic-radio" value="no" type="radio"
+                    checked>
+                <label for="diabetic-no" class="btn">No</label>
+                <!-- <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="diabetic-radio" id="diabetic-yes" value="yes" />
+                    <label class="form-check-label" for="diabetic-yes"> Yes </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="diabetic-radio" id="diabetic-no" value="no"
+                        checked />
+                    <label class="form-check-label" for="diabetic-no"> No </label>
+                </div> -->
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="form-group cent">
+        <div class="row">
+            <legend class="col-form-label col-sm-3 pt-0">Cancer Patient</legend>
+            <div class="col-sm-13">
+                <input id="cancer-yes" class="toggle toggle-left" name="cancer-radio" value="yes" type="radio">
+                <label for="cancer-yes" class="btn">Yes</label>
+                <input id="cancer-no" class="toggle toggle-right" name="cancer-radio" value="no" type="radio" checked>
+                <label for="cancer-no" class="btn">No</label>
+                <!-- <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="cancer-radio" id="cancer-yes" value="yes" />
+                    <label class="form-check-label" for="cancer-yes"> Yes </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="cancer-radio" id="cancer-no" value="no"
+                        checked />
+                    <label class="form-check-label" for="cancer-no"> No </label>
+                </div> -->
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="form-group cent">
+        <div class="row">
+            <legend class="col-form-label col-sm-3 pt-0">Cardiac Patient</legend>
+            <div class="col-sm-13">
+                <input id="cardiac-yes" class="toggle toggle-left" name="cardiac-radio" value="yes" type="radio">
+                <label for="cardiac-yes" class="btn">Yes</label>
+                <input id="cardiac-no" class="toggle toggle-right" name="cardiac-radio" value="no" type="radio" checked>
+                <label for="cardiac-no" class="btn">No</label>
+                <!-- <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="cardiac-radio" id="cardiac-yes" value="yes" />
+                    <label class="form-check-label" for="cardiac-yes"> Yes </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="cardiac-radio" id="cardiac-no" value="no"
+                        checked />
+                    <label class="form-check-label" for="cardiac-no"> No </label>
+                </div> -->
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="form-group cent">
+        <div class="row">
+            <legend class="col-form-label col-sm-3 pt-0">Asthama Patient</legend>
+            <div class="col-sm-13">
+                <input id="asthama-yes" class="toggle toggle-left" name="asthama-radio" value="yes" type="radio">
+                <label for="asthama-yes" class="btn">Yes</label>
+                <input id="asthama-no" class="toggle toggle-right" name="asthama-radio" value="no" type="radio" checked>
+                <label for="asthama-no" class="btn">No</label>
+                <!-- <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="asthama-radio" id="asthama-yes" value="yes" />
+                    <label class="form-check-label" for="asthama-yes"> Yes </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="asthama-radio" id="asthama-no" value="no"
+                        checked />
+                    <label class="form-check-label" for="asthama-no"> No </label>
+                </div> -->
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="form-group cent">
+        <div class="row">
+            <legend class="col-form-label col-sm-3 pt-0">
+                Blood Pressure Patient
+            </legend>
+            <div class="col-sm-13">
+                <input id="bp-yes" class="toggle toggle-left" name="bp-radio" value="yes" type="radio">
+                <label for="bp-yes" class="btn">Yes</label>
+                <input id="bp-no" class="toggle toggle-right" name="bp-radio" value="no" type="radio" checked>
+                <label for="bp-no" class="btn">No</label>
+                <!-- <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="bp-radio" id="bp-yes" value="yes" />
+                    <label class="form-check-label" for="bp-yes"> Yes </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="bp-radio" id="bp-no" value="no" checked />
+                    <label class="form-check-label" for="bp-no"> No </label>
+                </div> -->
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="form-group cent">
+        <div class="row">
+            <legend class="col-form-label col-sm-3 pt-0">Weak Immunity</legend>
+            <div class="col-sm-13">
+                <input id="immunity-yes" class="toggle toggle-left" name="immunity-radio" value="yes" type="radio">
+                <label for="immunity-yes" class="btn">Yes</label>
+                <input id="immunity-no" class="toggle toggle-right" name="immunity-radio" value="no" type="radio"
+                    checked>
+                <label for="immunity-no" class="btn">No</label>
+                <!-- <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="immunity-radio" id="immunity-yes" value="yes" />
+                    <label class="form-check-label" for="immunity-yes"> Yes </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="immunity-radio" id="immunity-no" value="no"
+                        checked />
+                    <label class="form-check-label" for="immunity-no"> No </label>
+                </div> -->
+            </div>
+        </div>
+    </fieldset>
+    <div class="form__group field">
+        <input type="input" class="form__field" placeholder="Other Health issues" name="other" id='other' required />
+        <label for="other" class="form__label">Other Health issues</label>
+    </div>
+    <!-- <fieldset class="form-group cent">
+        <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Other Health issues</legend>
+            <div class="col-sm-10">
+                <div class="form-check-inline">
+                    <input type="text" name="other" id="other" maxlength="5" />
+                </div>
+            </div>
+        </div>
+    </fieldset> -->
+    <button type="submit" name="save" id="save" value="save" class="button">
+        Submit
+    </button>
+</form>
+
+{% endblock %}
