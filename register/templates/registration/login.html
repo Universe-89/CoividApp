@@ -118,8 +118,8 @@
                 <form method="POST" class="from-group">
 
                     {% csrf_token %}
-                    <!-- {{form|crispy}} -->
-                    <div class="form__group field">
+                    {{form|crispy}}
+                    <!-- <div class="form__group field">
                         <input type="input" class="form__field" placeholder="Email" name="email" id='email' required />
                         <label for="email" class="form__label">Email</label>
                     </div>
@@ -127,7 +127,7 @@
                         <input type="input = "password"" class="form__field" placeholder="password" name="password" id='password'
                             required />
                         <label for="password" class="form__label">Password</label>
-                    </div>
+                    </div> -->
                     <p>Don't have an account ? register <a href="/register">here</a></p>
                     <button class="button">Login</button>
 
