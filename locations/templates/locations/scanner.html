@@ -48,70 +48,88 @@
 <body class="body">
     <div style="width: 100%" id="reader"></div>
     <form action="/home">
-        <button type="submit" class="button" id = "stop">Stop scanning</button>
+        <button type="submit" class="button" id="stop">Stop scanning</button>
     </form>
-    <form  method="POST" action="#">
+    <form method="POST" action="#">
         {% csrf_token %}
-        <div id ="pre" style = "visibility:hidden"> You are Entering<br></div>
-        <div id="result" style = "visibility:hidden"> 511</div>
-        <button type="submit" class="button" id= "enter"style = "visibility:hidden">Enter</button>
-        <input type="input" value="" id = "place" name = "place" hidden>
+        <div id="pre" style="visibility:hidden"> You are Entering<br></div>
+        <div id="result" style="visibility:hidden"> 511</div>
+        <button type="submit" class="button" id="enter" style="visibility:hidden">Enter</button>
+        <input type="input" value="" id="place" name="place" hidden>
     </form>
 
 
     <script type="text/javascript">
         const html5QrCode = new Html5Qrcode( /* element id */ "reader");
-        Html5Qrcode.getCameras().then(devices => {
-            /**
-             * devices would be an array of objects of type:
-             * { id: "id", label: "label" }
-             */
-            if (devices && devices.length) {
-                var cameraId = devices[0].id;
-                // .. use this to start scanning.
-                html5QrCode.start(
-                        cameraId, {
-                            fps: 10, // Optional frame per seconds for qr code scanning
-                            qrbox: 300 // Optional if you want bounded box UI
-                        },
-                        qrCodeMessage => {
-                            // do something when code is read
-                            document.getElementById("stop").style.visibility = "hidden";
-                            document.getElementById("pre").style.visibility = "visible"; 
-                            document.getElementById("result").innerHTML = qrCodeMessage;
-                            document.getElementById("place").value = qrCodeMessage;
-                            document.getElementById("result").style.visibility = 'visible';
-                            document.getElementById("enter").style.visibility = 'visible';
-                        },
-                        errorMessage => {
-                            // parse error, ignore it.
-                        })
-                    .catch(err => {
-                        // Start failed, handle it.
-                    });
-            }
-        }).catch(err => {
-            // handle err
-        });
+        const config = {
+            fps: 30,
+            qrbox: 300
+        };
+        // .. use this to start scanning.
+        const qrCodeSuccessCallback = message => {
+            document.getElementById("stop").style.visibility = "hidden";
+            document.getElementById("pre").style.visibility = "visible";
+            document.getElementById("result").innerHTML = qrCodeMessage;
+            document.getElementById("place").value = qrCodeMessage;
+            document.getElementById("result").style.visibility = 'visible';
+            document.getElementById("enter").style.visibility = 'visible';
+            /* handle success */
+        }
 
+        html5QrCode.start({
+            facingMode: "environment"
+        }, config, qrCodeSuccessCallback);
+        // Html5Qrcode.getCameras().then(devices => {
+        //     /**
+        //      * devices would be an array of objects of type:
+        //      * { id: "id", label: "label" }
+        //      */
+        //     if (devices && devices.length) {
+        //         var cameraId = devices[0].id;
+
+        //         html5QrCode.start(
+        //                 cameraId, {
+        //                     fps: 10, // Optional frame per seconds for qr code scanning
+        //                     qrbox: 300 // Optional if you want bounded box UI
+        //                 },
+        //                 qrCodeMessage => {
+        //                     // do something when code is read
+        //                     document.getElementById("stop").style.visibility = "hidden";
+        //                     document.getElementById("pre").style.visibility = "visible";
+        //                     document.getElementById("result").innerHTML = qrCodeMessage;
+        //                     document.getElementById("place").value = qrCodeMessage;
+        //                     document.getElementById("result").style.visibility = 'visible';
+        //                     document.getElementById("enter").style.visibility = 'visible';
+        //                 },
+        //                 errorMessage => {
+        //                     // parse error, ignore it.
+        //                 })
+        //             .catch(err => {
+        //                 // Start failed, handle it.
+        //             });
+        //     }
+        // }).catch(err => {
+        //     // handle err
+        // });
+        // // const html5QrCode = new Html5Qrcode("#reader");
 
 
         // // If you want to prefer front camera
-        // // html5QrCode.start({
-        // //     facingMode: "user"
-        // // }, config, qrCodeSuccessCallback);
+        // html5QrCode.start({
+        //     facingMode: "user"
+        // }, config, qrCodeSuccessCallback);
 
         // // If you want to prefer back camera
         // html5QrCode.start({
         //     facingMode: "environment"
         // }, config, qrCodeSuccessCallback);
 
-        // // // Select front camera or fail with `OverconstrainedError`.
-        // // html5QrCode.start({
-        // //     facingMode: {
-        // //         exact: "user"
-        // //     }
-        // // }, config, qrCodeSuccessCallback);
+        // // Select front camera or fail with `OverconstrainedError`.
+        // html5QrCode.start({
+        //     facingMode: {
+        //         exact: "user"
+        //     }
+        // }, config, qrCodeSuccessCallback);
 
         // // Select back camera or fail with `OverconstrainedError`.
         // html5QrCode.start({
