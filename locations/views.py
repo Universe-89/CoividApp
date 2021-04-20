@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect,HttpResponseRedirect
 import googlemaps
 import json
 import time
 import requests
+from .models import VisitedPlace
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.core.cache import cache
@@ -96,3 +97,12 @@ class currentLocation(APIView):
 # def room(request, room_name):
 #         mapInfo = {"hospitalName":hospitalName,"hospitalAdd":hospitalAdd,"driverName":driver['driverName'],"driverAmbulance":driver['driverAmbulance'],"latiOrigin":latitude_orign,"lngiOrigin":longitude_orign,"latiDesti":latitude_desti,"lngiDesti":longitude_desti,"latDriver":driver['latitude'],"lngDriver":driver['longitude'],'room_name': room_name}
 #         return render(request, 'locations/map.html', mapInfo)
+
+def qrcode(response) : 
+    if response.method=="POST":
+            info         = VisitedPlace()
+            info.place   = response.POST.get("place")
+            info.save()
+            response.user.VisitedPlace.add(info)
+            return redirect('/home')
+    return render(response,"locations/scanner.html",{})
