@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>test</title>
+    <title>Scanner</title>
     <!-- <link rel="shortcut icon" href="/icons/icons_0/favicon.ico"> -->
     <!-- <script type="text/javascript" src="Html5Qrcode.min.js"></script> -->
     <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
@@ -63,14 +63,14 @@
         const html5QrCode = new Html5Qrcode( /* element id */ "reader");
         const config = {
             fps: 30,
-            qrbox: 300
+            qrbox: 350
         };
         // .. use this to start scanning.
         const qrCodeSuccessCallback = message => {
             document.getElementById("stop").style.visibility = "hidden";
             document.getElementById("pre").style.visibility = "visible";
-            document.getElementById("result").innerHTML = qrCodeMessage;
-            document.getElementById("place").value = qrCodeMessage;
+            document.getElementById("result").innerHTML = message;
+            document.getElementById("place").value = message;
             document.getElementById("result").style.visibility = 'visible';
             document.getElementById("enter").style.visibility = 'visible';
             /* handle success */
