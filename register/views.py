@@ -21,10 +21,10 @@ def registration_view(response):
     if response.method == "POST":
         form = RegistrationForm(response.POST)
         if form.is_valid():
-            em = form.cleaned_data['email']        
-            user = Account.objects.get(email = em)
-            user.is_active = True
-            user.save()
+            # em = form.cleaned_data['email']        
+            # user = Account.objects.get(email = em)
+            # user.is_active = True
+            # user.save()
             form.save()
             return redirect('/')
     else:

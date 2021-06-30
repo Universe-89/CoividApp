@@ -40,7 +40,7 @@ class Account(AbstractBaseUser):
     is_admin       = models.BooleanField(default=False)
     is_staff       = models.BooleanField(default=False)
     is_superuser   = models.BooleanField(default=False)
-    is_active      = models.BooleanField(default=False)
+    is_active      = models.BooleanField(default=True)
     phone          = PhoneField(help_text='Phone number')
     name           = models.CharField(max_length=30)
 
