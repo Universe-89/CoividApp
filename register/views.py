@@ -26,12 +26,7 @@ def registration_view(response):
             # user.is_active = True
             # user.save()
             form.save()
-<<<<<<< HEAD
-            # genrateOTP(em)
-            return redirect('/otpvalidation')
-=======
             return redirect('/')
->>>>>>> 402ba9e3977c7f3dd8d24de628eafd74edbab5d7
     else:
         form = RegistrationForm()
     return render(response,"register/register.html",{"form":form})
