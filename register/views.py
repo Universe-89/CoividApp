@@ -21,10 +21,17 @@ def registration_view(response):
     if response.method == "POST":
         form = RegistrationForm(response.POST)
         if form.is_valid():
-            em = form.cleaned_data['email']        
+            # em = form.cleaned_data['email']        
+            # user = Account.objects.get(email = em)
+            # user.is_active = True
+            # user.save()
             form.save()
+<<<<<<< HEAD
             # genrateOTP(em)
             return redirect('/otpvalidation')
+=======
+            return redirect('/')
+>>>>>>> 402ba9e3977c7f3dd8d24de628eafd74edbab5d7
     else:
         form = RegistrationForm()
     return render(response,"register/register.html",{"form":form})
@@ -36,7 +43,7 @@ def logout_view(response):
 
 
 
-otpStore = []
+'''otpStore = []
 
 def genrateOTP(mail):
     otpStore.append(mail)
@@ -73,7 +80,7 @@ def otp_view(response):
                 user.delete()
                 return redirect("/")
     else:
-        return render(response,'registration/otpvalidation.html', {'message':"OTP send to your mail"})
+        return render(response,'registration/otpvalidation.html', {'message':"OTP send to your mail"})'''
 
 
 # class UserRegister(APIView):

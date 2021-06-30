@@ -63,14 +63,23 @@
         const html5QrCode = new Html5Qrcode( /* element id */ "reader");
         const config = {
             fps: 30,
+<<<<<<< HEAD
             qrbox: 350
+=======
+            qrbox: 300
+>>>>>>> 402ba9e3977c7f3dd8d24de628eafd74edbab5d7
         };
         // .. use this to start scanning.
         const qrCodeSuccessCallback = message => {
             document.getElementById("stop").style.visibility = "hidden";
             document.getElementById("pre").style.visibility = "visible";
+<<<<<<< HEAD
             document.getElementById("result").innerHTML = message;
             document.getElementById("place").value = message;
+=======
+            document.getElementById("result").innerHTML = qrCodeMessage;
+            document.getElementById("place").value = qrCodeMessage;
+>>>>>>> 402ba9e3977c7f3dd8d24de628eafd74edbab5d7
             document.getElementById("result").style.visibility = 'visible';
             document.getElementById("enter").style.visibility = 'visible';
             /* handle success */

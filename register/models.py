@@ -28,8 +28,12 @@ class MyAccountManager(BaseUserManager):
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
+<<<<<<< HEAD
         user.is_active = True
 
+=======
+        user.is_active=True
+>>>>>>> 402ba9e3977c7f3dd8d24de628eafd74edbab5d7
         user.set_password(password)
         user.save(using = self._db)
         return user
