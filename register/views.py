@@ -23,7 +23,7 @@ def registration_view(response):
         if form.is_valid():
             em = form.cleaned_data['email']        
             form.save()
-            genrateOTP(em)
+            # genrateOTP(em)
             return redirect('/otpvalidation')
     else:
         form = RegistrationForm()

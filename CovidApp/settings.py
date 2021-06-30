@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'j8$w07(^jzz!#ytp=5l_2xapv8qxj_0!n@mz491fs#l(&jf=)b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True    
 ON_UPDATE_HANDLED_BY_DB = True
 
 ALLOWED_HOSTS = []
