@@ -59,7 +59,7 @@ def location (response):
             hospitalAdd     = stored_results[0]['formatted_address']
             cache.add('latitude_desti',latitude_desti)
             cache.add('longitude_desti',longitude_desti)
-            driverLocation = requests.get('http://18.188.33.244/ambulance/view/' + latitude_orign + '/' + longitude_orign + '/',params=response.GET)
+            driverLocation = requests.get('https://18.188.33.244/ambulance/view/' + latitude_orign + '/' + longitude_orign + '/',params=response.GET)
             driver = driverLocation.json()
 
             # /sendNotification(hospitalName)
