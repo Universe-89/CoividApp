@@ -51,7 +51,7 @@ def home(response):
             longitude_desti = stored_results[0]['geometry']['location']['lng']
             hospitalName    = stored_results[0]['name']
             hospitalAdd     = stored_results[0]['formatted_address']
-            driverLocation = requests.get('http://localhost:8000/ambulance/view/' + latitude_orign + '/' + longitude_orign + '/',params=response.GET)
+            driverLocation = requests.get('http://18.188.33.244/ambulance/view/' + latitude_orign + '/' + longitude_orign + '/',params=response.GET)
             driver = driverLocation.json()
 
             # /sendNotification(hospitalName)
