@@ -26,7 +26,7 @@ SECRET_KEY = 'j8$w07(^jzz!#ytp=5l_2xapv8qxj_0!n@mz491fs#l(&jf=)b'
 DEBUG = True    
 ON_UPDATE_HANDLED_BY_DB = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 '''if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
